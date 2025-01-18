@@ -15,6 +15,7 @@ class Ticket extends Model
 
     protected $fillable = [
         'name',
+        'address',
         'slug',
         'thumbnail',
         'path_video',
