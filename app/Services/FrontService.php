@@ -6,7 +6,7 @@ use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\SellerRepositoryInterface;
 use App\Repositories\Contracts\TicketRepositoryInterface;
 
-class FontService
+class FrontService
 {
     public function __construct(
         protected TicketRepositoryInterface $ticketRepository,
