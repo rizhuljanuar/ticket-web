@@ -86,8 +86,8 @@ return [
 
     'livewire_loading_delay' => 'default',
 
-    'time_formats' => [
-        'time' => 'H:i',
-    ],
+    // 'time_formats' => [
+    //     'time' => 'H:i',
+    // ],
 
 ];
