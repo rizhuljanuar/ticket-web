@@ -34,6 +34,8 @@ class BookingTransaction extends Model
         do {
             $randomString = $prefix . mt_rand(1000, 9999);
         } while (self::where('booking_trx_id', $randomString)->exists());
+
+        return $randomString;
     }
 
     public function ticket(): BelongsTo

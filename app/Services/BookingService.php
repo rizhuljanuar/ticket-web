@@ -14,6 +14,11 @@ class BookingService
         protected BookingRepositoryInterface $bookingRepository,
     ) { }
 
+    public function getBookingDetails(array $validated)
+    {
+        return $this->bookingRepository->findByTrxIdAndPhoneNumber($validated['booking_trx_id'], $validated['phone_number']);
+    }
+
     public function calculateTotals($ticketId, $totalParticipant)
     {
         $ppn = 0.11;
@@ -26,7 +31,7 @@ class BookingService
         return [
             'sub_total' => $subTotal,
             'total_ppn' => $totalPpn,
-            'total_amoubt' => $totalAmount
+            'total_amount' => $totalAmount
         ];
     }
 
@@ -35,6 +40,7 @@ class BookingService
         session()->put('booking', [
             'ticket_id' => $ticket->id,
             'name' => $validateData['name'],
+            'email' => $validateData['email'],
             'phone_number' => $validateData['phone_number'],
             'started_at' => $validateData['started_at'],
             'total_participant' => $validateData['total_participant'],

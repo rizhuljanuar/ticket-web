@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookingRequest;
+use App\Http\Requests\StoreCheckBookingRequest;
+use App\Http\Requests\StorePaymentRequest;
 use App\Models\BookingTransaction;
 use App\Models\Ticket;
 use App\Services\BookingService;
@@ -16,8 +18,8 @@ class BookingController extends Controller
 
     public function booking(Ticket $ticket)
     {
-        dd($ticket);
-        // return view('front.booking', compact('ticket'));
+        // dd($ticket);
+        return view('front.booking', compact('ticket'));
     }
 
     public function bookingStore(Ticket $ticket, StoreBookingRequest $request)
@@ -36,7 +38,7 @@ class BookingController extends Controller
         return view('front.payment', $data);
     }
 
-    public function paymentStore(StoreBookingRequest $request)
+    public function paymentStore(StorePaymentRequest $request)
     {
         $validated = $request->validated();
         $bookingTransactionId = $this->bookingService->paymentStore($validated);
@@ -51,5 +53,23 @@ class BookingController extends Controller
     public function bookingFinished(BookingTransaction $bookingTransaction)
     {
         return view('front.booking_finished', compact('bookingTransaction'));
+    }
+
+    public function checkBooking()
+    {
+        return view('front.check_booking');
+    }
+
+    public function checkBookingDetails(StoreCheckBookingRequest $request)
+    {
+        $validated = $request->validated();
+
+        $bookingDetails = $this->bookingService->getBookingDetails($validated);
+
+        if ($bookingDetails) {
+            return view('front.check_booking_details', compact('bookingDetails'));
+        }
+
+        return redirect()->route('front.check_booking')->withErrors(['error' => 'Transaction not found']);
     }
 }
